@@ -60,6 +60,16 @@ internal class MainKtTest : DescribeSpec({
            runBlocking { sumOfPossibleGameIds(games) } shouldBe 8
         }
     }
+
+    describe("should calc power correctrly") {
+        it("should find minimal Set correctly") {
+            "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green".minPossibleSet() shouldBe mapOf<Color, Long>(Color.RED to 4,  Color.GREEN to 2, Color.BLUE to 6)
+        }
+
+        it("should calc power correctly") {
+            mapOf<Color, Long>(Color.RED to 4,  Color.GREEN to 2, Color.BLUE to 6).power() shouldBe 48
+        }
+    }
 })
 
 internal class GameTest : FunSpec({
