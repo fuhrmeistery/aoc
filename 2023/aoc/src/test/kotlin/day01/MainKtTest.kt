@@ -1,3 +1,5 @@
+package day01
+
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import java.io.File
@@ -22,13 +24,19 @@ class MainKtTest : DescribeSpec({
 
     it("should read calibrations from file") {
         val file = File(javaClass.classLoader.getResource("calib-test.txt")?.file ?: throw FileNotFoundException())
-        val calibration = file.readCalibration()
+        val calibration = readCalibration(file)
         calibration shouldBe 142
     }
 
-    describe("should replace spelled out numbers with digits") {
-        it("should map 'one' to '1'") {
-            "one".mapSpelledOutNumbers() shouldBe "1"
+    describe("should account for literal numbers") {
+        it("some test name") {
+            some("two1nine") shouldBe 29
+            some("eightwothree") shouldBe 83
+            some("abcone2threexyz") shouldBe 13
+            some("xtwone3four") shouldBe 24
+            some("4nineeightseven2") shouldBe 42
+            some("zoneight234") shouldBe 14
+            some("7pqrstsixteen") shouldBe 76
         }
     }
 })
