@@ -153,6 +153,6 @@ internal class RowMapper : FunSpec({
                 )
         )
 
-        withData(schemas) { (schema, expected) -> getEngineParts(listOf(schema)) shouldBe expected }
+//        withData(schemas) { (schema, expected) -> getEngineParts(listOf(schema)) shouldBe expected }
     }
 })

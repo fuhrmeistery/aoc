@@ -35,6 +35,20 @@ fun getScore(winningNumbers: List<Long>, score: Long = 0): Long {
     }
 }
 
+suspend fun scratchers(scratchers: List<String>,  original: List<String>): Long {
+    if (scratchers.isEmpty()) return 0L
+    val current = scratchers.first().also { println("Current $it") }
+    val score = getWinningNumbers(current).also { println("Winning ${it.size}") }
+    val numberOfCurrents = scratchers.filter { it == current }.size
+    val remaining = scratchers.filterNot { it == current }
+    val duplicates =
+        List(scratchers.filter { it == current }.size) { original.drop(1).take(score.size) }
+            .flatten().onEach(::println)
+    println("----")
+    val newScratchers = duplicates + remaining
+    return numberOfCurrents + scratchers(newScratchers, original.drop(1))
+}
+
 suspend fun main(): Unit = runBlocking(context = Dispatchers.Default) {
     val scratchers = File({}.javaClass.classLoader.getResource("day04.txt")?.file ?: throw FileNotFoundException())
         .readLines()
@@ -44,4 +58,9 @@ suspend fun main(): Unit = runBlocking(context = Dispatchers.Default) {
         .awaitAll()
         .sumOf { it }
         .also(::println)
+
+    println("---Start---")
+    val total = File({}.javaClass.classLoader.getResource("day04.txt")?.file ?: throw FileNotFoundException())
+        .readLines().let { scratchers(it, it) }.also(::println)
+    println("---End---")
 }
